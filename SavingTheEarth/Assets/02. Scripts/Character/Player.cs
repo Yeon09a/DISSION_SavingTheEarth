@@ -22,6 +22,27 @@ public class Player : Character
         moveVector.y = Input.GetAxisRaw("Vertical"); // S키 or 아래쪽 화살표 -1f, W키 or 위쪽 화살표 1f 값 반환
 
         direction = moveVector;
+<<<<<<< Updated upstream
+=======
+
+        // 플레이어의 애니메이션에 따른 현재 방향 설정
+        if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Up")) 
+        {
+            playerDir = PlayerDir.Up;
+        }
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Down"))
+        {
+            playerDir = PlayerDir.Down;
+        }
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Right"))
+        {
+            playerDir = PlayerDir.Right;
+        }
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Left"))
+        {
+            playerDir = PlayerDir.Left;
+        }
+>>>>>>> Stashed changes
     }
 
     // 마우스 상호작용 추가하기
