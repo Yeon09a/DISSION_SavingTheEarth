@@ -7,19 +7,34 @@ public abstract class Character : MonoBehaviour
 {
     // 인스펙터창에 보여짐
     [SerializeField]
-    protected float hp;
-    public float speed;
+    private float speed;
+    public float hp;
     protected Vector2 direction;
-    protected Animator animator;
+    protected Animator myAnimator;
+    private Rigidbody2D myRigidbody;
 
-    void Start()
+    public bool IsMoving
     {
-        animator = GetComponent<Animator>();
+        get
+        {
+            return direction.x != 0 || direction.y != 0;
+        }
+    }
+
+    protected virtual void Start()
+    {
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // protected는 상속받은 클래스에서만 접근 가능
     // virtual을 통해서 상속 가능
     protected virtual void Update()
+    {
+        HandleLayers();
+    }
+
+    private void FixedUpdate()
     {
         Move();
     }
@@ -28,26 +43,35 @@ public abstract class Character : MonoBehaviour
     public void Move()
     {
         // direction 값 0f일 시에 멈춤
-        transform.Translate(direction * speed * Time.deltaTime);
+        myRigidbody.velocity = direction.normalized * speed;
+    }
 
-        if (direction.x != 0 || direction.y != 0)
+    public void HandleLayers()
+    {
+        if (IsMoving)
         {
-            AnimateMovement(direction);
+            ActivateLayer("Walk Layer");
+
+            myAnimator.SetFloat("x", direction.x);
+            myAnimator.SetFloat("y", direction.y);
+            Debug.Log("이동중");
         }
         else
         {
-            animator.SetLayerWeight(1, 0);
+            ActivateLayer("Idle Layer");
+            Debug.Log("멈춤");
         }
     }
 
-    //파라미터 값에 따른 애니메이션 변환
-    public void AnimateMovement(Vector2 direction)
+    public void ActivateLayer(string layerName)
     {
-        animator.SetLayerWeight(1, 1);
-
-        animator.SetFloat("x", direction.x);
-        animator.SetFloat("y", direction.y);
+        for (int i = 0; i < myAnimator.layerCount; i++)
+        {
+            myAnimator.SetLayerWeight(i, 0);
+        }
+        myAnimator.SetLayerWeight(myAnimator.GetLayerIndex(layerName), 1);
     }
+
 
     // 스피드 setter
     public void SetSpeed(float sp)
@@ -64,7 +88,7 @@ public abstract class Character : MonoBehaviour
     // 애니메이터 setter
     public void SetAnimator(bool b)
     {
-        animator.enabled = b;
-        animator.Play("idle_Up");
+        myAnimator.enabled = b;
+        myAnimator.Play("idle_Up", 0);
     }
 }

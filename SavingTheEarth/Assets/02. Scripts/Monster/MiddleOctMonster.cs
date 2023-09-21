@@ -41,12 +41,6 @@ public class MiddleOctMonster : MonoBehaviour
         StartCoroutine(Attack());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator Attack() // 공격 함수
     {
         while (true)

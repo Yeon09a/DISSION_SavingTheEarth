@@ -47,6 +47,11 @@ public class BossMonster : Character
         StartCoroutine(Attack());
     }
 
+    protected override void Update()
+    {
+        
+    }
+
     IEnumerator Attack()
     {
         while (true)
@@ -102,13 +107,13 @@ public class BossMonster : Character
         {
             Debug.Log("마비 시작");
             player.SetSpeed(0.0f);
-            player.SetAnimator(false);
+           // player.SetAnimator(false);
 
             yield return new WaitForSeconds(paralysisTime);
 
             Debug.Log("마비 끝");
             player.SetSpeed(5.0f);
-            player.SetAnimator(true);
+           // player.SetAnimator(true);
         }
     }
 

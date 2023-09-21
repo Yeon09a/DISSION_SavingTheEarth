@@ -66,6 +66,7 @@ public class Player : Character
                 // hit.collider가 레이와 충돌한 오브젝트
             }
         }
+        HandleLayers();
     }
 
     // 키보드 입력값을 받음 (방향 및 멈춤 제어)
@@ -80,19 +81,19 @@ public class Player : Character
         direction = moveVector;
 
         // 플레이어의 애니메이션에 따른 현재 방향 설정
-        if (animator.GetCurrentAnimatorStateInfo(1).IsName("walk_Up")) 
+       if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Up")) 
         {
             playerDir = PlayerDir.Up;
         }
-        else if (animator.GetCurrentAnimatorStateInfo(1).IsName("walk_Down"))
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Down"))
         {
             playerDir = PlayerDir.Down;
         }
-        else if (animator.GetCurrentAnimatorStateInfo(1).IsName("walk_Right"))
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Right"))
         {
             playerDir = PlayerDir.Right;
         }
-        else if (animator.GetCurrentAnimatorStateInfo(1).IsName("walk_Left"))
+        else if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Left"))
         {
             playerDir = PlayerDir.Left;
         }
