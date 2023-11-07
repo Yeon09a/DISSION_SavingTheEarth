@@ -32,6 +32,34 @@ public class InventoryManager : MonoBehaviour
 
     public ItemDic items; // 아이템 종류 에셋
 
+    public SlotClick[] slots; // 슬롯 배열
+    private SlotClick selectedSlot = null; // 선택된 슬롯
+
+    void Update()
+    {
+        // 키보드 입력을 통해 슬롯 선택
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                // 변경된 부분: 슬롯 번호를 SlotClick 객체로 변환
+                SlotClick selectedSlot = slots[i];
+                SelectSlot(selectedSlot);
+            }
+        }
+    }
+
+    public void SelectSlot(SlotClick clickedSlot)
+    {
+        if (selectedSlot != null)
+        {
+            selectedSlot.ToggleSelection(); // 이전에 선택한 슬롯 선택 해제
+        }
+
+        selectedSlot = clickedSlot; // 새로운 슬롯 선택
+        selectedSlot.ToggleSelection();
+    }
+
     private void Awake()
     {
         
