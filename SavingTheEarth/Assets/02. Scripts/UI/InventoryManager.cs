@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class HaveItemInfo
 {
@@ -43,9 +44,36 @@ public class InventoryManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
                 // 변경된 부분: 슬롯 번호를 SlotClick 객체로 변환
-                SlotClick selectedSlot = slots[i];
-                SelectSlot(selectedSlot);
+                SlotClick clickedSlot = slots[i];
+                HandleSlotSelection(clickedSlot);
             }
+        }
+    }
+
+    public void HandleSlotSelection(SlotClick clickedSlot)
+    {
+        bool isSelected = clickedSlot.IsSelected();
+
+        if (isSelected)
+        {
+            // 이미 선택된 슬롯을 다시 선택한 경우
+            clickedSlot.Deselect();
+            selectedSlot = null; // 선택된 슬롯 업데이트
+        }
+        else
+        {
+            // 새로운 슬롯을 선택한 경우
+            if (selectedSlot != null)
+            {
+                // 이전에 선택한 슬롯이 있으면 해당 슬롯을 선택 해제
+                selectedSlot.Deselect();
+            }
+
+            clickedSlot.ToggleSelection();
+            selectedSlot = clickedSlot; // 선택된 슬롯 업데이트
+
+            // EventSystem을 사용하여 현재 선택된 게임 오브젝트 변경
+            EventSystem.current.SetSelectedGameObject(clickedSlot.gameObject);
         }
     }
 
@@ -62,8 +90,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        
-        
         // 나중에 저장 데이터 필요
         checkItemList = new bool[5];
         checkItem = new bool[15];
@@ -73,19 +99,35 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*foreach (KeyValuePair<int, HaveItemInfo> item in PlayerData.instance.haveItems)
+        //UpdateInventory();
+    }
+
+
+
+    public void UpdateInventory()
+    {
+        // slots 배열 초기화
+        slots = GetComponentsInChildren<SlotClick>();
+
+        // 선택된 슬롯 초기화
+        selectedSlot = null;
+
+        // 소지한 아이템 불러오기
+        foreach (KeyValuePair<int, HaveItemInfo> item in DataManager.instance.nowPlayerData.haveItems)
         {
             if (item.Value.place == 0) // 아이템 창
             {
                 LoadItemIcon(itemListSlots, checkItemList, item.Key, item.Value.slotNum, item.Value.count);
-            } else if (item.Value.place == 1) // 소지품
+            }
+            else if (item.Value.place == 1) // 소지품
             {
                 LoadItemIcon(itemSlots, checkItem, item.Key, item.Value.slotNum, item.Value.count);
-            } else // 중요물품
+            }
+            else // 중요물품
             {
                 LoadItemIcon(pItemSlots, checkPItem, item.Key, item.Value.slotNum, item.Value.count);
             }
-        }*/
+        }
     }
 
     private void LoadItemIcon(GameObject[] slots, bool[] checkSlots, int id, int index, int count) // 아이템 아이콘 불러오기
@@ -101,9 +143,9 @@ public class InventoryManager : MonoBehaviour
 
     private int CheckHaveItem(int id) // 아이템을 현재 가지고 있는지 확인
     {
-        if (PlayerData.instance.haveItems.ContainsKey(id)) // 아이템을 가지고 있는 경우
+        if (DataManager.instance.nowPlayerData.haveItems.ContainsKey(id)) // 아이템을 가지고 있는 경우
         {
-            return PlayerData.instance.haveItems[id].place;
+            return DataManager.instance.nowPlayerData.haveItems[id].place;
         }
         else // 가지고 있지 않은 경우
         {
@@ -198,18 +240,18 @@ public class InventoryManager : MonoBehaviour
         icon.GetComponent<ItemIcon>().itemInfo = items.items[id];
         icon.transform.SetParent(slots[index].transform.GetChild(0));
         checkSlots[index] = true ;
-        PlayerData.instance.haveItems.Add(id, new HaveItemInfo(place, 1, index));
+        DataManager.instance.nowPlayerData.haveItems.Add(id, new HaveItemInfo(place, 1, index));
     }
 
     public void PutHaveItem(int id, GameObject[] slots) // 기존에 가지고 있던 아이템 추가
     {
-        HaveItemInfo haveItemInfo = PlayerData.instance.haveItems[id];
+        HaveItemInfo haveItemInfo = DataManager.instance.nowPlayerData.haveItems[id];
         int slotNum = haveItemInfo.slotNum;
         haveItemInfo.count += 1;
         slots[slotNum].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = haveItemInfo.count.ToString();
     }
 
-    private bool PutItem(int id) // 아이템 획득
+    public bool PutItem(int id) // 아이템 획득
     {
         int place = CheckHaveItem(id);
         if(place == -1) // 새로 얻은 경우

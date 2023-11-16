@@ -11,6 +11,7 @@ TagManager:
   - TitleDialog
   - Select0
   - Select1
+  - PlayerGroundCollider
   layers:
   - Default
   - TransparentFX

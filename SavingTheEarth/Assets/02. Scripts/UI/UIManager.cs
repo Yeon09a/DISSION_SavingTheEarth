@@ -25,17 +25,27 @@ public class UIManager : MonoBehaviour
     public Button mapExitBtn; // 전체 맵 닫기 버튼
     public Button inventoryExitBtn;
 
-    public Button goTitleBtn;
-    public GameObject titleCheckPanel;
-    public Button titleOkayBtn;
-    public Button titleNoBtn;
+    public Button goTitleBtn; // 타이틀로 돌아가기 버튼
+    public GameObject titleCheckPanel; // 타이틀로 돌아갈 것인지 확인
+    public Button titleOkayBtn; // 돌아가기
+    public Button titleNoBtn; // 취소
+
+    public GameObject shopPanel; // 상점 판넬
+    public Button purchaseBtn; // 구입하기 버튼
+    public Button shopExitBtn; // 상점 나가기 버튼
 
     private bool isInvenOpen = false; // 인벤토리 상태
+
+    public Player player; // 플레이어
+    public ShopManager shopMng;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        // UI 액션 연결
+        player.OpenShop += OpenShop;
+
         // UI 리스너 연결
         inventoryBtn.onClick.AddListener(SetInventory);
         itemTgl.onValueChanged.AddListener(OnItemPanel);
@@ -46,6 +56,8 @@ public class UIManager : MonoBehaviour
         titleOkayBtn.onClick.AddListener(ClickTitleOkayBtn);
         titleNoBtn.onClick.AddListener(ClickTitleNoBtn);
         inventoryExitBtn.onClick.AddListener(SetInventory);
+        purchaseBtn.onClick.AddListener(PurchaseItem);
+        shopExitBtn.onClick.AddListener(CloseShop);
     }
 
     private void SetInventory() // 인벤토리 열기
@@ -88,27 +100,42 @@ public class UIManager : MonoBehaviour
         // 설정 변수 세팅 추가
     }
 
-    private void CloseMap()
+    private void CloseMap() // 지도 닫기
     {
         fullMap.SetActive(false);
     }
 
-    private void OpenCheckTitle()
+    private void OpenCheckTitle() // 타이틀로 돌아갈 것인지 확인
     {
         settingPanel.SetActive(false);
         titleCheckPanel.SetActive(true);
     }
 
-    private void ClickTitleOkayBtn()
+    private void ClickTitleOkayBtn() // 타이틀로 돌아가기 
     {
         GameManager.instance.curMap = MapName.Title;
         SceneManager.LoadScene("Title");
     }
 
-    private void ClickTitleNoBtn()
+    private void ClickTitleNoBtn() // 타이틀로 돌아가지 않기
     {
         settingPanel.SetActive(true);
         titleCheckPanel.SetActive(false);
+    }
+
+    public void OpenShop() // 상점 열기
+    {
+        shopPanel.SetActive(true);
+    }
+
+    public void CloseShop() // 상점 닫기
+    {
+        shopPanel.SetActive(false);
+    }
+
+    public void PurchaseItem() // 구매하기
+    {
+        shopMng.Purchase();
     }
 
 }

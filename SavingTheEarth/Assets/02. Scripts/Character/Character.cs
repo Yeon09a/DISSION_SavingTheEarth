@@ -54,12 +54,10 @@ public abstract class Character : MonoBehaviour
 
             myAnimator.SetFloat("x", direction.x);
             myAnimator.SetFloat("y", direction.y);
-            Debug.Log("¿Ãµø¡ﬂ");
         }
         else
         {
             ActivateLayer("Idle Layer");
-            Debug.Log("∏ÿ√„");
         }
     }
 

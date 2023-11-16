@@ -5,15 +5,15 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class TitleDialog : MonoBehaviour, IPointerClickHandler
+public class TitleDialog : MonoBehaviour// 타이틀 대화 시스템
 {
-    public TextMeshProUGUI dialogName;
-    public TextMeshProUGUI dialogContent;
-    public Image dialogToggle;
-    public Transform selectPanel;
-    public GameObject selectBtn;
+    public TextMeshProUGUI dialogName; // 대화창 이름
+    public TextMeshProUGUI dialogContent; // 대화창 내용
+    public Image dialogToggle; // 대화창 토글
+    public Transform selectPanel; // 선택지 판넬
+    public GameObject[] selectBtns; // 선택지들
 
-    private int eventNum;
+    private int eventNum; // 이벤트 번호
 
     // Start is called before the first frame update
     void Start()
@@ -21,51 +21,36 @@ public class TitleDialog : MonoBehaviour, IPointerClickHandler
         
     }
 
-    public void SetDialogName(string text)
+    public void SetDialogName(string text) // 대화창 이름 설정
     {
         dialogName.text = text;
     }
 
-    public void SetDialogContent(int i, string text)
+    public void SetDialogContent(int i, string text) // 대화창 내용 설정
     {
         eventNum = i;
         dialogContent.text = text;
     }
 
-    public void MakeSelect(string[] selects, TitleManager titleManager)
+    public void MakeSelect(string[] selects, TitleManager titleManager) // 선택지 만들기
     {
         selectPanel.gameObject.SetActive(true);
         for(int i = 0; i < selects.Length; i++)
         {
-            GameObject button = Instantiate(selectBtn, Vector2.zero, Quaternion.identity);
-            button.transform.SetParent(selectPanel);
-            button.GetComponentInChildren<TextMeshProUGUI>().text = selects[i];
-            button.transform.tag = "Select" + i;
-            button.GetComponent<Button>().onClick.AddListener(() => {titleManager.SetSelectResult(button.tag, DeleteSelect);});
+            selectBtns[i].SetActive(true);
+            selectBtns[i].GetComponentInChildren<TextMeshProUGUI>().text = selects[i];
+            string bTag = selectBtns[i].tag;
+            selectBtns[i].GetComponent<Button>().onClick.AddListener(() => {titleManager.SetSelectResult(bTag, DeleteSelect);});
         }
     }
 
-    public void DeleteSelect()
+    public void DeleteSelect() // 선택지 해제
     {
-        int count = selectPanel.childCount;
-        for(int i = 0; i < count; i++)
+        for(int i = 0; i < 3; i++)
         {
-            Destroy(selectPanel.GetChild(i).gameObject);
+            selectBtns[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            selectBtns[i].SetActive(false);
         }
-
-        selectPanel.DetachChildren(); // 모든 자식들의 부모 해제
         selectPanel.gameObject.SetActive(false);
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.pointerCurrentRaycast.gameObject.CompareTag("TitleDialog"))
-        {
-            if(eventNum == 0)
-            {
-                transform.GetChild(0).gameObject.SetActive(false);
-                transform.GetChild(1).gameObject.SetActive(false);
-            }
-        }
     }
 }

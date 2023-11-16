@@ -69,8 +69,6 @@ public class MiddleOctMonster : MonoBehaviour
 
         startBeamAnimation();
     }
-
-
     private Vector2 setBeamPos(int i) // ºö À§Ä¡ ¼³Á¤
     {
         Vector2 pos = new Vector2(0f, 0f);

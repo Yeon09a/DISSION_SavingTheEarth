@@ -5,14 +5,15 @@ using UnityEngine;
 public class BaseMap : MonoBehaviour
 {
     public GameObject baseMapFace;
+    public BaseMapPanel baseMapPanel;
     private Player player;
     
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        player.activateFace += ActivateFace;
-        player.deactivateFace += DeactivateFace;
+        baseMapPanel.activateFace += ActivateFace;
+        baseMapPanel.deactivateFace += DeactivateFace;
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class BaseMap : MonoBehaviour
 
     private void OnDisable()
     {
-        player.activateFace -= ActivateFace;
-        player.deactivateFace -= DeactivateFace;
+        baseMapPanel.activateFace -= ActivateFace;
+        baseMapPanel.deactivateFace -= DeactivateFace;
     }
 }

@@ -20,13 +20,12 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        curTime = 540;// 어떻게 설정할 것인지는 개발하면서 
-        uiMinutes = 0;
-        uiHours = 9;
-        ampm = "오전  ";
     }
     void Start()
     {
+        curTime = DataManager.instance.nowPlayerData.gameTime;
+        ampm = DataManager.instance.nowPlayerData.ampm;
+
         StartCoroutine(setTime());
     }
 

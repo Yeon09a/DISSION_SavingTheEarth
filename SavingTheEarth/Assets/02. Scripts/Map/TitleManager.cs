@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class TitleManager : MonoBehaviour
 {
@@ -25,10 +26,13 @@ public class TitleManager : MonoBehaviour
 
     // 이어하기 판넬 관련
     public Button loadBackBtn; // 세이브 판넬 뒤로가기
-
-    // 세이브 파일은 따로 스크립트 만들기
+    public Button saveInfoOkayBtn; // SaveInfoPanel의 확인 버튼
+    public GameObject saveInfoPanel; // 세이브 파일 확인 판넬
+    public GameObject[] savePanels; // 세이브 슬롯 배열
 
     public delegate void SelectDel();
+
+    private string path;
 
 
     private void Update()
@@ -53,6 +57,9 @@ public class TitleManager : MonoBehaviour
         okayBtn.onClick.AddListener(ClickOkayBtn);
         newBackBtn.onClick.AddListener(ClickNewBackBtn);
         loadBackBtn.onClick.AddListener(ClickLoadBackBtn);
+        saveInfoOkayBtn.onClick.AddListener(SaveCheckOkayBtn);
+
+        path = Application.dataPath + "/09. Data/";
     }
     
     public void OpenNewGamePanel() // 새 게임 판넬 활성화
@@ -67,6 +74,7 @@ public class TitleManager : MonoBehaviour
         startPanel.SetActive(false); // 버튼 모음 비활성화
 
         saveFilePanel.SetActive(true);
+        LoadSaveSlotData();
     }
 
     public void GameExit() // 게임 종료
@@ -118,13 +126,50 @@ public class TitleManager : MonoBehaviour
 
         saveFilePanel.SetActive(false);
     }
+
+    private void SaveCheckOkayBtn() // SaveInfoPanel의 확인 버튼
+    {
+        saveInfoPanel.SetActive(false);
+    }
+
+    private void LoadSaveSlotData()
+    {
+        path = Application.dataPath + "/09. Data/";
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (File.Exists(path + "PlayerSaveData" + i.ToString()))
+            {
+                DataManager.instance.LoadData(i);
+                int playTime = DataManager.instance.nowPlayerData.playTime;
+                int sec = playTime % 60;
+                int min = (playTime / 60) % 60;
+                int hour = (playTime / 60) / 60;
+
+                savePanels[i].GetComponent<SavePanel>().isFile = true;
+                savePanels[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = hour.ToString("D2") + ":" + min.ToString("D2") + ":" + sec.ToString("D2");
+                savePanels[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = DataManager.instance.nowPlayerData.placeName;
+                savePanels[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = DataManager.instance.nowPlayerData.playerName;
+
+            } else
+            {
+                savePanels[i].GetComponent<SavePanel>().isFile = false;
+                savePanels[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+                savePanels[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
+                savePanels[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
+            }
+        }
+    }
     #endregion
 
-    public void SetSelectResult(string sTag, SelectDel deleteSelect)
+    public void SetSelectResult(string sTag, SelectDel deleteSelect) // 버튼 선택 함수
     {
-        if (sTag == "Select0")
+        Debug.Log(sTag);
+        
+        if (sTag.Equals("Select0"))
         {
-            PlayerData.instance.playerName = playerName;
+            DataManager.instance.PlayNewData();
+            DataManager.instance.nowPlayerData.playerName = playerName;
             GameManager.instance.curMap = MapName.BaseMap;
             GameManager.instance.preMap = MapName.Title;
 

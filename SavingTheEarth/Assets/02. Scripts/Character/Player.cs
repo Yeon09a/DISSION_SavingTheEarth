@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +14,13 @@ public enum PlayerDir
 
 public enum MapName
 { // 맵 열거형
+    SaveTitle,
     Title,
     BaseMap
 }
+
 public class Player : Character
 {
-    public delegate void BaseMapDel(); // 기본맵 관련 델리게이트
-    public event BaseMapDel activateFace; // BaseMapFace 활성화 이벤트
-    public event BaseMapDel deactivateFace; // BaseMapFace 비활성화 이벤트
 
     public PlayerDir playerDir = PlayerDir.Down; // 플레이어 현재 방향
 
@@ -28,12 +28,18 @@ public class Player : Character
     private Vector3 interPos; // 상호작용할 방향(레이 발사할 방향)
     private float rayLength; // 레이 길이
 
+    public Action OpenShop; // 상점을 여는 액션
+
+
     protected override void Start()
     {
         base.Start();
         if (GameManager.instance.preMap == MapName.Title)
         {
             transform.position = new Vector3(12.63f, 3.3f, 0);
+        } else if (GameManager.instance.preMap == MapName.SaveTitle)
+        {
+            transform.position = DataManager.instance.nowPlayerData.playerPos;
         }
     }
 
@@ -112,20 +118,5 @@ public class Player : Character
     // 마우스 상호작용 추가하기
 
 
-    // 충돌 처리
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("BaseFace"))
-        {
-            activateFace();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("BaseFace"))
-        {
-            deactivateFace();
-        }
-    }
+    
 }
