@@ -27,6 +27,10 @@ public class Player : Character
     private Vector3 interPos; // 상호작용할 방향(레이 발사할 방향)
     private float rayLength; // 레이 길이
 
+    GameObject scanObject; // 레이와 충돌한 오브젝트 저장
+
+    public DialogManager dialogManager;
+
     protected override void Start()
     {
         base.Start();
@@ -76,7 +80,13 @@ public class Player : Character
             {
                 // 여기에서 상호작용
                 // hit.collider가 레이와 충돌한 오브젝트
+                scanObject = hit.collider.gameObject;
+                
+
+                dialogManager.Talk(scanObject);
             }
+            else
+                scanObject = null;
         }
         HandleLayers();
     }
