@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/BaseMap.unity
     guid: 1116c71e223ac004ab591f0285d57123
+  - enabled: 1
+    path: Assets/01. Scenes/SeaMap.unity
+    guid: 2f16f2e58ee37ec40b12b250a01ff706
   m_configObjects: {}

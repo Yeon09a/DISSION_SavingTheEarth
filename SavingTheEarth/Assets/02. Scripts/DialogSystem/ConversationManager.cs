@@ -11,19 +11,29 @@ public class ConversationManager : MonoBehaviour
 
     void Start()
     {
+
+    }
+
+    private void Awake()
+    {
+        // 초기화
         dialogData = new Dictionary<int, string[]>();
         portraitData = new Dictionary<int, Sprite>();
 
+        // 데이터 생성 함수 호출
         GenerateData();
     }
 
-    void GenerateData() // 대사 & 초상화 생성
+    // 대사 & 초상화 생성 함수
+    void GenerateData()
     {
-        // dialogData.Add(~~~(id), new string[] { "~~~:portraitIndex", "~~~:portraitIndex" }); // 후에 수정
+        dialogData.Add(100, new string[] { "이동: WASD 또는 방향키\n달리기: shift\n아이템 상호작용: e 또는 마우스\n인벤토리 선택: 숫자 1 ~ 5" });
+        dialogData.Add(200, new string[] { "1. 온실로 가서 물 주기\n2. 교수님과의 통신 확인하기" });
 
         // portraitData.Add(~~~(id) + n, portraitArr[n]); // 후에 수정
     }
 
+    // 대화 반환 함수
     public string GetDialog(int id, int dialogIndex) // 대사 리턴 (id = 대화상대 객체id , dialogIndex = 대사 인덱스)
     {
         if (dialogIndex == dialogData[id].Length) // 대화가 끝나면

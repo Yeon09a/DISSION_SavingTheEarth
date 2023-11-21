@@ -3447,7 +3447,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -83}
-  m_SizeDelta: {x: -60, y: 156.75}
+  m_SizeDelta: {x: -110, y: 156.75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1127717381
 MonoBehaviour:
@@ -3469,7 +3469,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uD654 \uC2DC\uC2A4\uD15C \uD14C\uC2A4\uD2B8"
+  m_text: "\uB300\uD654 \uC2DC\uC2A4\uD15C \uD14C\uC2A4\uD2B8\n\uB300\uD654 \uC2DC\uC2A4\uD15C
+    \uD14C\uC2A4\uD2B8"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a1b29dbb2d2f05048b6ddcb0ba2759c8, type: 2}
   m_sharedMaterial: {fileID: -9064929844216009782, guid: a1b29dbb2d2f05048b6ddcb0ba2759c8, type: 2}
@@ -3504,11 +3505,11 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 1.5
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

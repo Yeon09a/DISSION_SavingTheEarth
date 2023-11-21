@@ -16,7 +16,8 @@ public enum MapName
 { // 맵 열거형
     SaveTitle,
     Title,
-    BaseMap
+    BaseMap,
+    SeaMap
 }
 
 public class Player : Character
@@ -30,6 +31,12 @@ public class Player : Character
 
     public Action OpenShop; // 상점을 여는 액션
 
+    GameObject scanObject; // 레이와 충돌한 오브젝트 저장
+
+    public DialogManager dialogManager;
+
+    public GameObject ScanObject { get; private set; } // scanObject를 외부에서 읽기 위한 프로퍼티
+
 
     protected override void Start()
     {
@@ -38,6 +45,13 @@ public class Player : Character
         {
             transform.position = new Vector3(12.63f, 3.3f, 0);
         } else if (GameManager.instance.preMap == MapName.SaveTitle)
+        {
+            transform.position = DataManager.instance.nowPlayerData.playerPos;
+        } else if (GameManager.instance.preMap == MapName.BaseMap)
+        {
+            transform.position = new Vector3(0f, -2f, 0);
+        }
+        else if (GameManager.instance.preMap == MapName.SaveTitle)
         {
             transform.position = DataManager.instance.nowPlayerData.playerPos;
         }
@@ -49,7 +63,6 @@ public class Player : Character
         GetInput();
         // base는 상속받은 클래스의 기능을 가리킴
         base.Move();
-
         // 키보드 상호작용 
         if (Input.GetKeyDown(KeyCode.E)) // 상호작용 키
         {
@@ -80,7 +93,14 @@ public class Player : Character
             {
                 // 여기에서 상호작용
                 // hit.collider가 레이와 충돌한 오브젝트
+
+                scanObject = hit.collider.gameObject;
+                ScanObject = scanObject; // ScanObject 변수에 저장
+
+                //dialogManager.Talk(scanObject);
             }
+            else
+                scanObject = null;
         }
         HandleLayers();
     }
