@@ -100,9 +100,21 @@ public class Player : Character
                 ScanObject = scanObject; // ScanObject 변수에 저장
 
                 //dialogManager.Talk(scanObject);
+
+                // "E" 키를 눌렀을 때 인벤토리 매니저의 Use 메서드 호출
+                InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
+                if (inventoryManager != null)
+                {
+                    Item itemInSlot = scanObject.GetComponent<ItemIcon>().itemInfo;
+                    inventoryManager.Use(itemInSlot);
+                    Debug.Log("아이템  있음");
+                } else 
+                    Debug.Log("아이템  없음");
             }
             else
+            {
                 scanObject = null;
+            }
         }
         HandleLayers();
     }

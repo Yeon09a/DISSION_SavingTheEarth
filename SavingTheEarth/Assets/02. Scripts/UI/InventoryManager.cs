@@ -46,7 +46,25 @@ public class InventoryManager : MonoBehaviour
                 // 변경된 부분: 슬롯 번호를 SlotClick 객체로 변환
                 SlotClick clickedSlot = slots[i];
                 HandleSlotSelection(clickedSlot);
+
+                // 아이템이 있는지 확인하고 처리
+                CheckAndHandleItemInSlot(clickedSlot);
             }
+        }
+    }
+
+    private void CheckAndHandleItemInSlot(SlotClick clickedSlot)
+    {
+        if (clickedSlot.HasItem())
+        {
+            Item itemInSlot = clickedSlot.GetItem();
+            Debug.Log("Selected slot contains item: " + itemInSlot.itName);
+
+            // 여기에서 선택된 슬롯에 아이템이 들어있는 경우의 로직을 추가하세요.
+        }
+        else
+        {
+            Debug.Log("Selected slot is empty.");
         }
     }
 
@@ -100,6 +118,14 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         //UpdateInventory();
+    }
+
+    public void Use(Item item)
+    {
+        // 아이템 속성을 기반으로 아이템 사용 효과에 대한 로직을 구현
+        Debug.Log("아이템 사용 중: " + item.itName);
+
+        // 필요한 경우 아이템 속성을 기반으로 추가 로직을 구현
     }
 
 
