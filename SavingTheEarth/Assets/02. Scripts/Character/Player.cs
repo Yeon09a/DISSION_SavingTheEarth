@@ -44,10 +44,12 @@ public class Player : Character
         if (GameManager.instance.preMap == MapName.Title)
         {
             transform.position = new Vector3(12.63f, 3.3f, 0);
-        } else if (GameManager.instance.preMap == MapName.SaveTitle)
+        }
+        else if (GameManager.instance.preMap == MapName.SaveTitle)
         {
             transform.position = DataManager.instance.nowPlayerData.playerPos;
-        } else if (GameManager.instance.preMap == MapName.BaseMap)
+        }
+        else if (GameManager.instance.preMap == MapName.BaseMap)
         {
             transform.position = new Vector3(0f, -2f, 0);
         }
@@ -117,7 +119,7 @@ public class Player : Character
         direction = moveVector;
 
         // 플레이어의 애니메이션에 따른 현재 방향 설정
-       if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Up")) 
+        if (myAnimator.GetCurrentAnimatorStateInfo(1).IsName("walk_Up"))
         {
             playerDir = PlayerDir.Up;
         }
@@ -138,5 +140,5 @@ public class Player : Character
     // 마우스 상호작용 추가하기
 
 
-    
+
 }

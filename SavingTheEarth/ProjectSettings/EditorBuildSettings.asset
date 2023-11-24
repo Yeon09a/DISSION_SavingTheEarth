@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/01. Scenes/Title.unity
     guid: df87f258cdaeb4f458622c07a2997a8c
@@ -19,5 +16,5 @@ EditorBuildSettings:
     guid: 1116c71e223ac004ab591f0285d57123
   - enabled: 1
     path: Assets/01. Scenes/SeaMap.unity
-    guid: 2f16f2e58ee37ec40b12b250a01ff706
+    guid: daa0e4a228381844995f68de3edf2fd2
   m_configObjects: {}
