@@ -7,8 +7,7 @@ public class BaseMap : MonoBehaviour
     public GameObject baseMapFace;
     public BaseMapPanel baseMapPanel;
     private Player player;
-    
-    // Start is called before the first frame update
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

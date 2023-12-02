@@ -37,10 +37,10 @@ public class Player : Character
 
     public GameObject ScanObject { get; private set; } // scanObject를 외부에서 읽기 위한 프로퍼티
 
-
     protected override void Start()
     {
         base.Start();
+        
         if (GameManager.instance.preMap == MapName.Title)
         {
             transform.position = new Vector3(12.63f, 3.3f, 0);
@@ -51,11 +51,7 @@ public class Player : Character
         }
         else if (GameManager.instance.preMap == MapName.BaseMap)
         {
-            transform.position = new Vector3(0f, -2f, 0);
-        }
-        else if (GameManager.instance.preMap == MapName.SaveTitle)
-        {
-            transform.position = DataManager.instance.nowPlayerData.playerPos;
+            transform.position = new Vector3(-0.02f, -3.16f, 0);
         }
     }
 
@@ -95,26 +91,32 @@ public class Player : Character
             {
                 // 여기에서 상호작용
                 // hit.collider가 레이와 충돌한 오브젝트
-
+                ScanObject = scanObject;
                 scanObject = hit.collider.gameObject;
-                ScanObject = scanObject; // ScanObject 변수에 저장
 
-                //dialogManager.Talk(scanObject);
-
-                // "E" 키를 눌렀을 때 인벤토리 매니저의 Use 메서드 호출
-                InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
-                if (inventoryManager != null)
+                if (scanObject.CompareTag("ItemDialog"))
                 {
-                    Item itemInSlot = scanObject.GetComponent<ItemIcon>().itemInfo;
-                    inventoryManager.Use(itemInSlot);
-                    Debug.Log("아이템  있음");
-                } else 
-                    Debug.Log("아이템  없음");
+                    ScanObject = scanObject; // ScanObject 변수에 저장
+                    dialogManager.Talk(scanObject);
+                }
+
+                if (scanObject.CompareTag("Door"))
+                {
+                    if (scanObject.name.Equals("OutDoor"))
+                    {
+                        GameManager.instance.curMap = MapName.SeaMap;
+                        GameManager.instance.preMap = MapName.BaseMap;
+
+                        SceneLoadingManager.LoadScene("SeaMap");
+                    }
+                }
             }
             else
             {
+                ScanObject = null;
                 scanObject = null;
             }
+
         }
         HandleLayers();
     }

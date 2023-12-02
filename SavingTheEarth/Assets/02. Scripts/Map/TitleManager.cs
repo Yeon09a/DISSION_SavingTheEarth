@@ -43,8 +43,7 @@ public class TitleManager : MonoBehaviour
             GameManager.instance.curMap = MapName.BaseMap;
             GameManager.instance.preMap = MapName.Title;
 
-            SceneManager.LoadScene("BaseMap");
-            SceneManager.LoadScene("Player", LoadSceneMode.Additive);
+            SceneLoadingManager.LoadScene("BaseMap");
         }
     }
 
@@ -173,8 +172,7 @@ public class TitleManager : MonoBehaviour
             GameManager.instance.curMap = MapName.BaseMap;
             GameManager.instance.preMap = MapName.Title;
 
-            SceneManager.LoadScene("BaseMap");
-            SceneManager.LoadScene("Player", LoadSceneMode.Additive);
+            SceneLoadingManager.LoadScene("BaseMap");
         }
         else
         {

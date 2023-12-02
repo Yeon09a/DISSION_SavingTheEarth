@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GoSeaMap : MonoBehaviour
 {
-    private Player player;
+    /*private Player player;
 
     private void Start()
     {
@@ -14,18 +14,16 @@ public class GoSeaMap : MonoBehaviour
 
     private void Update()
     {
-        // 플레이어가 "OutDoor"와 충돌하고 "E" 키를 누르면 "SeaMap"으로 이동
         if (player != null && Input.GetKeyDown(KeyCode.E))
         {
-            GameManager.instance.curMap = MapName.SeaMap;
-            GameManager.instance.preMap = MapName.BaseMap;
-
-            if (player.ScanObject != null && player.ScanObject.CompareTag("Door") && player.ScanObject.name == "OutDoor")
+            // player 객체가 null이 아닌 경우에만 아래 코드 실행
+            if (player.ScanObject != null && player.ScanObject.CompareTag("Door"))
             {
-                SceneManager.LoadScene("SeaMap");
-                SceneManager.LoadScene("Player", LoadSceneMode.Additive);
+                GameManager.instance.curMap = MapName.SeaMap;
+                GameManager.instance.preMap = MapName.BaseMap;
+
+                SceneLoadingManager.LoadScene("SeaMap");
             }
         }
-    }
-
+    }*/
 }
