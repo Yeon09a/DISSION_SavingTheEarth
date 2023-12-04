@@ -34,22 +34,6 @@ public class SoundManager : MonoBehaviour
 
             }*/
         }
-    }
 
-    public void SetMusicVolume(float volume)
-    {
-        musicsource1.volume = volume;
-        musicsource2.volume = volume;
-        //musicsource3.volume = volume;
-    }
-
-    public void SetButtonVolume(float volume)
-    {
-        btnsource.volume = volume;
-    }
-
-    public void OnEffect()
-    {
-        btnsource.Play();
     }
 }

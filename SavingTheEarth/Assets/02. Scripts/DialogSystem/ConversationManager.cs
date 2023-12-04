@@ -47,6 +47,9 @@ public class ConversationManager : MonoBehaviour
         dialogData.Add(4000, new string[] {
             "책상 정리 언제 하지../1"
         });
+        dialogData.Add(5000, new string[] {
+            "최근에.. 책을 읽었던가?/4"
+        });
         dialogData.Add(6000, new string[] {
             "웬 사진들이 이렇게 많아?/3"
         });

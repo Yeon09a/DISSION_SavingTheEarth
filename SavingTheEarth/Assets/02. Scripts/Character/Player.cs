@@ -123,13 +123,14 @@ public class Player : Character
             {
                 // 여기에서 상호작용
                 // hit.collider가 레이와 충돌한 오브젝트
-                ScanObject = scanObject; // ScanObject 변수에 저장
+                scanObject = hit.collider.gameObject;
                 dialogManager.Talk(scanObject);
 
+                ScanObject = scanObject; // ScanObject 변수에 저장
+                
                 //if (scanObject.CompareTag("ItemDialog"))
                 //{
-                //    ScanObject = scanObject; // ScanObject 변수에 저장
-                //    dialogManager.Talk(scanObject);
+                    
                 //}
                 if (scanObject.CompareTag("Door"))
                 {
