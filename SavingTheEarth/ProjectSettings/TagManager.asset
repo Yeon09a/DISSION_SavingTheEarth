@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BaseFace
   - Clue
   - Door
   - Canvas
@@ -12,6 +11,9 @@ TagManager:
   - Select0
   - Select1
   - PlayerGroundCollider
+  - FarmField
+  - FarmTool
+  - ItemDialog
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Water
   - UI
   - InteractionObject
-  - 
-  - 
+  - Unreveal
+  - UnrevealSeaMap
   - 
   - 
   - 

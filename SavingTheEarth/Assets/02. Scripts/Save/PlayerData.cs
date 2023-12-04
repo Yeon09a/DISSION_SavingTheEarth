@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -15,6 +16,8 @@ public class PlayerData // 플레이어 데이터 클래스
     public int gameTime; // 게임 시간
     public string ampm; // 오전, 오후
     public int money; // 돈
+    public int[] fieldSpIndex; // 0 : 잔디, 1 : 간 땅, 2 : 젖은 땅
+    public int[] fieldCrops; // 0 : 작물 없음, 1 : 감자, 2 : 토마토
 
     // 아이템 관련 변수
     [NonSerialized]
@@ -29,5 +32,8 @@ public class PlayerData // 플레이어 데이터 클래스
         this.ampm = ampm;
         this.haveItems = haveItems;
         this.money = money;
+        fieldSpIndex = Enumerable.Repeat(0, 18).ToArray();
+        fieldCrops = Enumerable.Repeat(0, 18).ToArray();
+
     }
 }

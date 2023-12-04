@@ -127,7 +127,7 @@ public class ShopManager : MonoBehaviour
     {
         if (money >= price)
         {
-            bool isNotFull = invenMng.PutItem(selectedItem.id);
+            bool isNotFull = invenMng.PutItem(selectedItem.id, count);
             if (isNotFull)
             {
                 money -= price;
@@ -135,7 +135,8 @@ public class ShopManager : MonoBehaviour
                 moneyText.text = money.ToString();
                 dialogText.text = dialogArr[1];
                 //invenMng.UpdateInventory();
-            } else
+            }
+            else
             {
                 cantPurchasePanel.SetActive(true);
                 cantPurchasePanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "가방에 빈 자리가 없어/n구매할 수 없습니다.";

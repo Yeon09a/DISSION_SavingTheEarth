@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class PoisonBubble : MonoBehaviour
 {
-    public Vector3 moveDir;
+    public float bubbleRot;
+    private Vector3 moveDir;
 
     private float speed = 1.5f;
 
     private bool isMove = false;
 
-    private void OnEnable()
-    {
-        MiddleOctMonster.startBubbleMove += startBubbleMove;
-    }
+    public MiddleOctMonster mOctMon;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mOctMon.startBubbleMove += startBubbleMove;
+        moveDir = (Quaternion.Euler(0, 0, bubbleRot) * transform.position).normalized;
     }
 
     // Update is called once per frame
@@ -36,17 +35,12 @@ public class PoisonBubble : MonoBehaviour
 
         yield return new WaitForSeconds(5.0f);
 
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     private void startBubbleMove()
     {
         StartCoroutine(BubbleMove());
-    }
-
-    private void OnDisable()
-    {
-        MiddleOctMonster.startBubbleMove -= startBubbleMove;
     }
 
     private void OnDestroy()

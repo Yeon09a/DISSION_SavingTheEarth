@@ -9,7 +9,6 @@ public class SlotClick : MonoBehaviour, IPointerClickHandler
     private Color originalColor; // 원래 색상
 
     public Color selectedColor; // 선택된 색상
-    private Item item;
 
     // 이전에 선택한 슬롯을 추적하기 위한 변수
     private static SlotClick previousSelectedSlot;
@@ -58,21 +57,4 @@ public class SlotClick : MonoBehaviour, IPointerClickHandler
     {
         return isSelected;
     }
-
-    public void SetItem(Item newItem)
-    {
-        item = newItem;
-        // 필요한 경우 추가 로직 작성
-    }
-
-    public bool HasItem()
-    {
-        return item != null;
-    }
-
-    public Item GetItem()
-    {
-        return item;
-    }
-
 }

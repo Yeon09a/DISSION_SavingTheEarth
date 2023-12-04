@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/SeaMap.unity
     guid: daa0e4a228381844995f68de3edf2fd2
+  - enabled: 1
+    path: Assets/01. Scenes/Loading.unity
+    guid: 1a022d810454cf84baa3c0996c01cdcc
   m_configObjects: {}

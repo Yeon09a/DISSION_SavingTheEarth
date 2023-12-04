@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // abstract를 통한 추상 클래스 사용
 public abstract class Character : MonoBehaviour
@@ -11,7 +13,9 @@ public abstract class Character : MonoBehaviour
     public float hp;
     protected Vector2 direction;
     protected Animator myAnimator;
-    private Rigidbody2D myRigidbody;
+    protected Rigidbody2D myRigidbody;
+
+    public LayerMask groundMask;
 
     public bool IsMoving
     {
@@ -23,14 +27,16 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-        myRigidbody = GetComponent<Rigidbody2D>();
+        
         myAnimator = GetComponent<Animator>();
+        myRigidbody = GetComponent<Rigidbody2D>();
     }
 
     // protected는 상속받은 클래스에서만 접근 가능
     // virtual을 통해서 상속 가능
     protected virtual void Update()
     {
+        
         HandleLayers();
     }
 
@@ -44,6 +50,11 @@ public abstract class Character : MonoBehaviour
     {
         // direction 값 0f일 시에 멈춤
         myRigidbody.velocity = direction.normalized * speed;
+
+        if (GameManager.instance.curMap == MapName.SeaMap)
+        {
+            direction.y = 0f;
+        }
     }
 
     public void HandleLayers()
