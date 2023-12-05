@@ -108,7 +108,7 @@ public class InventoryManager : MonoBehaviour
     public void UpdateInventory()
     {
         // slots 배열 초기화
-        slots = GetComponentsInChildren<SlotClick>();
+        //slots = GetComponentsInChildren<SlotClick>();
 
         // 선택된 슬롯 초기화
         selectedSlot = null;

@@ -51,11 +51,12 @@ public class DialogManager : MonoBehaviour
 
     public void Talk(GameObject scanObj) // 대화 시작시 호출될 함수
     {
+        GameManager.instance.isTalk = true;
+
         scanObject = scanObj;
 
         ObjectData objData = scanObject.GetComponent<ObjectData>();
         Conversation(objData.id, objData.isNPC);
-
         dialogBox.SetActive(isTalk); // 대화창 팝업
         toggle.SetActive(true); // 토글 다시 보이게 처리
     }
@@ -71,6 +72,7 @@ public class DialogManager : MonoBehaviour
             dialogIndex = 0; // 대사 인덱스 초기화
             Debug.Log(questManager.CheckQuest(id)); // 다음 퀘스트로 넘어가기
 
+            GameManager.instance.isTalk = false;
             return; // 종료
         }
 

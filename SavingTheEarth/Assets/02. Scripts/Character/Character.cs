@@ -55,6 +55,12 @@ public abstract class Character : MonoBehaviour
         {
             direction.y = 0f;
         }
+
+        if(GameManager.instance.isTalk == true)
+        {
+            direction.y = 0f;
+            direction.x = 0f;
+        }
     }
 
     public void HandleLayers()

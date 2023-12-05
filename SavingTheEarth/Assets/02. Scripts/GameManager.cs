@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public MapName preMap; // 이동하기 전 맵
     public MapName curMap; // 이동한 현재 맵
+    public bool isTalk;
 
     private void Awake()
     {
