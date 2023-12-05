@@ -31,8 +31,15 @@ public class ConversationManager : MonoBehaviour
 
         // 오브젝트id => 조종대:1000 칠판: 2000 온실 문: 3000 조종실 책상: 4000 내방 선반: 5000
         // 교수님방 책상 위 사진: 6000 출구: 7000 내방 침대: 8000 교수님 선반: 9000
-        // 플레이어 책상: 10000 교수님방 책상: 11000 교수님방 침대: 12000
+        // 플레이어 책상: 10000 교수님방 책상: 11000 교수님방 침대: 12000 온실 박스: 13000
         // /뒤에 숫자 : 초상화 배정 번호
+
+        // 시작 대사(임시)
+        dialogData.Add(50000, new string[] {
+            "교수님과 통신 연결이 끊긴 지 벌써 일주일 째...\n\n해저 nnnnkm 연구용 잠수함에 혼자 남겨졌다/2",
+            "세상이 망해도 하루는 어김없이 시작되는구나\n\n오늘도 일하러 가보실까?/0",
+            "일단 조종실로 가서 조종대부터 체크하자/0"
+        });
 
         // 기본 대사
         dialogData.Add(1000, new string[] {
@@ -100,19 +107,22 @@ public class ConversationManager : MonoBehaviour
             "흠 온실부터 들러야겠다/0"
         });
         dialogData.Add(40 + 3000, new string[] {
+            "저기 작물 상자에서 식량을 꺼내오자/0"
+        });
+        dialogData.Add(41 + 13000, new string[] {
             "식량 오케이!/0",
             "다음은 조종실로 가자/0"
         });
-        dialogData.Add(41 + 4000, new string[] {
+        dialogData.Add(42 + 4000, new string[] {
             "무기도 챙겼고!/0",
             "내 방에 침낭을 뒀었는데 어디에 놨더라?/2"
         });
-        dialogData.Add(42 + 5000, new string[] {
+        dialogData.Add(43 + 5000, new string[] {
             "여기 있었구나\n\n침낭도 오케이!/0",
             "이제 미니 잠수함 키만 챙기면 되겠다/0",
             "근데 교수님 방에 있을 텐데.. 잠깐 들어가봐도 되겠지?/2"
         });
-        dialogData.Add(43 + 6000, new string[] {
+        dialogData.Add(44 + 6000, new string[] {
             "교수님 책상을 뒤적거리니까 기분이 이상하네\n\n저를 용서하세요 교수님../1",
             "어딨는거지... 아 이거다!/0",
             "엇 그런데 이 사진은.. 뭐지?\n\n흠 키를 왜 이 아래에?/3",

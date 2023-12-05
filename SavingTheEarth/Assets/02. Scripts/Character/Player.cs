@@ -65,10 +65,11 @@ public class Player : Character
                 }
             }
         }
-        
+
         if (GameManager.instance.preMap == MapName.Title)
         {
             transform.position = new Vector3(12.63f, 3.3f, 0);
+            dialogManager.Talk();
         }
         else if (GameManager.instance.preMap == MapName.SaveTitle)
         {
@@ -79,7 +80,8 @@ public class Player : Character
             transform.position = new Vector3(-0.02f, -3.16f, 0);
             GetComponent<CapsuleCollider2D>().isTrigger = false;
 
-        } else if (GameManager.instance.preMap == MapName.SeaMap)
+        }
+        else if (GameManager.instance.preMap == MapName.SeaMap)
         {
             GetComponent<CapsuleCollider2D>().isTrigger = true;
             myRigidbody.gravityScale = 0f;
@@ -96,6 +98,10 @@ public class Player : Character
         // 키보드 상호작용 
         if (Input.GetKeyDown(KeyCode.E)) // 상호작용 키
         {
+
+
+            ScanObject = scanObject; // ScanObject 변수에 저장
+
             if (playerDir == PlayerDir.Down) // 방향이 아래인 경우
             {
                 interPos = Vector3.down;
@@ -118,20 +124,18 @@ public class Player : Character
             }
 
             hit = Physics2D.Raycast(transform.position, interPos, rayLength, 1 << 6); // 레이 발사
+
+
+            // hit = Physics2D.Raycast(transform.position, interPos, rayLength, 1 << 6); // 레이 발사
             //Debug.DrawRay(transform.position, interPos * rayLength, Color.red);
             if (hit.collider != null) // 충돌한 오브젝트가 있을 경우
             {
                 // 여기에서 상호작용
                 // hit.collider가 레이와 충돌한 오브젝트
+                //scanObject = hit.collider.gameObject;
                 scanObject = hit.collider.gameObject;
-                dialogManager.Talk(scanObject);
+                dialogManager.SenceObject(scanObject);
 
-                ScanObject = scanObject; // ScanObject 변수에 저장
-                
-                //if (scanObject.CompareTag("ItemDialog"))
-                //{
-                    
-                //}
                 if (scanObject.CompareTag("Door"))
                 {
                     if (scanObject.name.Equals("OutDoor"))
@@ -140,7 +144,8 @@ public class Player : Character
                         GameManager.instance.preMap = MapName.BaseMap;
 
                         SceneLoadingManager.LoadScene("SeaMap");
-                    } else if (scanObject.name.Equals("GHDoor"))
+                    }
+                    else if (scanObject.name.Equals("GHDoor"))
                     {
                         transform.position = new Vector3(0.074f, 46.486f, 0);
                         playerFarm.enabled = true;
@@ -181,6 +186,8 @@ public class Player : Character
                 ScanObject = null;
                 scanObject = null;
             }
+
+            dialogManager.Talk();
 
         }
         HandleLayers();

@@ -22,42 +22,27 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(GameStartDialog());
-
         Debug.Log(questManager.CheckQuest());
     }
 
-    IEnumerator GameStartDialog()
-    {
-        dialogBox.SetActive(true);
-        toggle.SetActive(false); // 토글 안보이게 처리
-        portrait.gameObject.SetActive(true);
-        dialogText.text = "교수님과 통신 연결이 끊긴 지 벌써 일주일 째...\n\n" +
-            "해저 nnnnkm 연구용 잠수함에 혼자 남겨졌다.";
-
-        yield return new WaitForSeconds(4f);
-
-        portrait.gameObject.SetActive(true);
-        dialogText.text = "세상이 망해도 하루는 어김없이 시작되는구나\n\n오늘도 일하러 가보실까?";
-
-        yield return new WaitForSeconds(3f);
-
-        dialogText.text = "일단 조종실로 가서 조종대부터 체크하자";
-
-        yield return new WaitForSeconds(2.5f);
-
-        dialogBox.SetActive(false);
-    }
-
-    public void Talk(GameObject scanObj) // 대화 시작시 호출될 함수
+    public void SenceObject(GameObject scanObj)
     {
         scanObject = scanObj;
+    }
 
-        ObjectData objData = scanObject.GetComponent<ObjectData>();
-        Conversation(objData.id, objData.isNPC);
+    public void Talk() // 대화 시작시 호출될 함수
+    {
+        if (scanObject != null)
+        {
+            ObjectData objData = scanObject.GetComponent<ObjectData>();
+            Conversation(objData.id, objData.isNPC);
+        }
+        else
+        {
+            Conversation(50000, false);
+        }
 
         dialogBox.SetActive(isTalk); // 대화창 팝업
-        toggle.SetActive(true); // 토글 다시 보이게 처리
     }
 
     void Conversation(int id, bool isNPC)
@@ -101,8 +86,15 @@ public class DialogManager : MonoBehaviour
     // 토글 버튼 함수
     public void ToggleClick()
     {
-        ObjectData objData = scanObject.GetComponent<ObjectData>();
-        Conversation(objData.id, objData.isNPC);
+        if (scanObject != null)
+        {
+            ObjectData objData = scanObject.GetComponent<ObjectData>();
+            Conversation(objData.id, objData.isNPC);
+        }
+        else
+        {
+            Conversation(50000, false);
+        }
 
         dialogBox.SetActive(isTalk); // 대화창 팝업
     }

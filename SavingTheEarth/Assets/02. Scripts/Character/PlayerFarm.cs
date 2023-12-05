@@ -28,7 +28,7 @@ public class PlayerFarm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -36,7 +36,7 @@ public class PlayerFarm : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E)) // 상호작용 키
         {
-            hit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector3.forward * -1, 1.0f, 1 << 6); // 레이 발사
+            hit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector3.forward * -1, 1.0f, 1 << 9); // 레이 발사
             if (hit.collider != null) // 충돌한 오브젝트가 있을 경우
             {
                 // 여기에서 상호작용
@@ -105,7 +105,8 @@ public class PlayerFarm : MonoBehaviour
                         invenMng.UseItem(6);
                         scanObject.GetComponent<Field>().fieldInfo = new Vector3(fieldNum, curState, 1);
                         SetField(fieldNum, curState, 1);
-                    } else
+                    }
+                    else
                     {
                         OnFarmInfo("심을 감자 씨앗이 없습니다.");
                     }
